@@ -1,0 +1,12 @@
+# Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+
+# Generate sources and resources a first time
+> karaCodeGen
+> karaResourceGen
+# Update the thrift file with a new struct
+$ copy-file stub_service.thrift src/main/thrift/stub_service.thrift
+# Generate again
+> karaCodeGen
+> karaResourceGen
+# Check that the files were regenerated ('check' is a custom task in build.sbt next to this file)
+> check

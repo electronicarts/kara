@@ -1,0 +1,11 @@
+# Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+
+# Make sure the generated sources compile
+> run mirror
+> run oneArgUnwrapped
+> run knownException
+> run unknownException
+> run noArg
+> run oneArgWrapped
+> run multiArg
+

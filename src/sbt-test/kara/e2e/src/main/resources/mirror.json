@@ -1,0 +1,18 @@
+{
+  "aString": "This is a string.",
+  "aBool": true,
+  "aByte": 1,
+  "anI16": 16,
+  "anI32": 32,
+  "anI64": 64,
+  "binaryData": "YUJ5dGUK",
+  "aListOfPrimitives": [ "stringOne", "stringTwo" ],
+  "aListOfStructs": [ { }, { } ],
+  "aMapOfPrimitives": { "keyOne": "valueOne", "keyTwo": "valueTwo" },
+  "aMapOfStructs" : { "keyOne": {}, "keyTwo": {} },
+  "anOptionalOfPrimitive": null,
+  "anOptionalOfEnum": "lowercase",
+  "anUnion": { "aString":  "theString" },
+  "importedStruct": { "id": "anId" },
+  "object": "aStringObject"
+}

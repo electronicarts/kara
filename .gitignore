@@ -1,0 +1,29 @@
+# Scala
+target
+*.class
+
+# IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+.idea
+out
+
+# Scala-IDE
+.scala_dependencies
+.worksheet
+.idea
+
+# Vim
+tags
+.*.swp
+.*.swo
+
+# VS Code
+.bloop/
+.metals/
+.vscode
+
+# macOS
+.DS_Store
+

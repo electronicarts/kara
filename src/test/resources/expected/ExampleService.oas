@@ -1,0 +1,456 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "ExampleService API Overview",
+    "version" : "v1"
+  },
+  "paths" : {
+    "/exampleMethod1" : {
+      "post" : {
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.example.ExampleResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "oneOf" : [
+                    {
+                      "$ref" : "#/components/schemas/com.example.ExampleException"
+                    },
+                    {
+                      "$ref" : "#/components/schemas/com.example.OtherExampleException"
+                    },
+                    {
+                      "$ref" : "#/components/schemas/com.imported.ImportedException"
+                    },
+                    {
+                      "$ref" : "#/components/schemas/DefaultJsonFailureResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "oneOf" : [
+                  {
+                    "$ref" : "#/components/schemas/com.example.ExampleRequest"
+                  },
+                  {
+                    "type" : "object",
+                    "required" : [
+                      "request"
+                    ],
+                    "properties" : {
+                      "request" : {
+                        "$ref" : "#/components/schemas/com.example.ExampleRequest"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "parameters" : [
+          {
+            "in" : "header",
+            "name" : "Finagle-Ctx-Header1",
+            "schema" : {
+              "type" : "string",
+              "required" : "false"
+            }
+          },
+          {
+            "in" : "header",
+            "name" : "Finagle-Ctx-Header2",
+            "schema" : {
+              "type" : "string",
+              "required" : "false"
+            }
+          }
+        ]
+      }
+    },
+    "/noArgMethod" : {
+      "post" : {
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.example.ExampleResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "oneOf" : [
+                    {
+                      "$ref" : "#/components/schemas/DefaultJsonFailureResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          
+        },
+        "parameters" : [
+          {
+            "in" : "header",
+            "name" : "Finagle-Ctx-Header1",
+            "schema" : {
+              "type" : "string",
+              "required" : "false"
+            }
+          },
+          {
+            "in" : "header",
+            "name" : "Finagle-Ctx-Header2",
+            "schema" : {
+              "type" : "string",
+              "required" : "false"
+            }
+          }
+        ]
+      }
+    },
+    "/multiArgMethod" : {
+      "post" : {
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.example.ExampleResponse"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "oneOf" : [
+                    {
+                      "$ref" : "#/components/schemas/DefaultJsonFailureResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "required" : "true",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [
+                  "one",
+                  "two"
+                ],
+                "properties" : {
+                  "one" : {
+                    "$ref" : "#/components/schemas/com.example.ExampleField"
+                  },
+                  "two" : {
+                    "$ref" : "#/components/schemas/com.example.ExampleEnum"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters" : [
+          {
+            "in" : "header",
+            "name" : "Finagle-Ctx-Header1",
+            "schema" : {
+              "type" : "string",
+              "required" : "false"
+            }
+          },
+          {
+            "in" : "header",
+            "name" : "Finagle-Ctx-Header2",
+            "schema" : {
+              "type" : "string",
+              "required" : "false"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "com.example.OtherExampleException" : {
+        "required" : [
+          "message",
+          "code"
+        ],
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          },
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "com.imported.ImportedStruct" : {
+        "required" : [
+          "legacyId"
+        ],
+        "properties" : {
+          "legacyId" : {
+            "$ref" : "#/components/schemas/com.imported.ImportedStructDependency"
+          },
+          "serial" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "com.example.ExampleRequest" : {
+        "required" : [
+          "externalId",
+          "settings",
+          "settingsList",
+          "settingsSet",
+          "settingsMap",
+          "importedEnum",
+          "importedStruct",
+          "aList",
+          "aMap",
+          "aShort",
+          "anInt",
+          "aLong",
+          "aBinary",
+          "empty"
+        ],
+        "properties" : {
+          "aLong" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "aMap" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "anOption" : {
+            "type" : "string"
+          },
+          "aShort" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "externalId" : {
+            "$ref" : "#/components/schemas/com.example.ExternalId"
+          },
+          "settings" : {
+            "$ref" : "#/components/schemas/com.example.ExampleField"
+          },
+          "anInt" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "newUnionField" : {
+            "$ref" : "#/components/schemas/com.example.ExampleUnion"
+          },
+          "settingsMap" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/com.example.ExampleField"
+            }
+          },
+          "empty" : {
+            "$ref" : "#/components/schemas/com.example.EmptyStruct"
+          },
+          "logLevel" : {
+            "$ref" : "#/components/schemas/com.example.ExampleEnum"
+          },
+          "importedStruct" : {
+            "$ref" : "#/components/schemas/com.imported.ImportedStruct"
+          },
+          "settingsSet" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/com.example.ExampleField"
+            }
+          },
+          "settingsList" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/com.example.ExampleField"
+            }
+          },
+          "aBinary" : {
+            "type" : "string",
+            "format" : "binary"
+          },
+          "aList" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "importedEnum" : {
+            "$ref" : "#/components/schemas/com.imported.ImportedEnum"
+          }
+        }
+      },
+      "com.imported.ImportedEnum" : {
+        "type" : "string",
+        "enum" : [
+          "camelCase",
+          "lowercase",
+          "PascalCase",
+          "snake_case",
+          "UPPERCASE"
+        ]
+      },
+      "com.example.ExampleField" : {
+        "required" : [
+          "aBool",
+          "aString"
+        ],
+        "properties" : {
+          "aBool" : {
+            "type" : "boolean"
+          },
+          "aString" : {
+            "type" : "string"
+          }
+        }
+      },
+      "com.example.ExampleEnum" : {
+        "type" : "string",
+        "enum" : [
+          "camelCase",
+          "lowercase",
+          "PascalCase",
+          "snake_case",
+          "UPPERCASE"
+        ]
+      },
+      "com.imported.ImportedStructDependency" : {
+        "required" : [
+          "dependencyId"
+        ],
+        "properties" : {
+          "dependencyId" : {
+            "type" : "string"
+          }
+        }
+      },
+      "com.example.ExampleUnion" : {
+        "oneOf" : [
+          {
+            "type" : "boolean"
+          },
+          {
+            "$ref" : "#/components/schemas/com.example.ExampleField"
+          }
+        ]
+      },
+      "com.example.ExternalId" : {
+        "type" : "integer",
+        "format" : "int64"
+      },
+      "com.example.EmptyStruct" : {
+        "required" : [
+        ],
+        "properties" : {
+          
+        }
+      },
+      "com.imported.ImportedException" : {
+        "required" : [
+          "message"
+        ],
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "com.example.InternalId" : {
+        "type" : "string"
+      },
+      "DefaultJsonFailureResponse" : {
+        "required" : [
+          "message"
+        ],
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "com.example.ExampleResponse" : {
+        "required" : [
+          "id"
+        ],
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/com.example.InternalId"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "com.example.UPPER" : {
+        "required" : [
+          "aValue"
+        ],
+        "properties" : {
+          "aValue" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.example.ExampleException" : {
+        "required" : [
+          "message"
+        ],
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
