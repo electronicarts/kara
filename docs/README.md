@@ -69,6 +69,10 @@ Http.server.serve(":8080", karaSvc)
 
 **kara** was born at [EA DICE](https://www.dice.se/).
 
+## Contributing
+
+Before you can contribute, EA must have a Contributor License Agreement (CLA) on file that has been signed by you. You can find the CLA [here](https://electronicarts.na1.echosign.com/public/esignWidget?wid=CBFCIBAA3AAABLblqZhByHRvZqmltGtliuExmuV-WNzlaJGPhbSRg2ufuPsM3P0QmILZjLpkGslg24-UJtek*).
+
 ## License
 
 Modified BSD License (3-Clause BSD license). See [LICENSE](./LICENSE).
