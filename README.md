@@ -1,5 +1,9 @@
 # kara
 
+![status](https://img.shields.io/badge/status-active-brightgreen.svg)
+[![maven central](https://maven-badges.herokuapp.com/maven-central/com.ea.kara/kara/badge.svg)](https://search.maven.org/artifact/com.ea.kara/kara)
+[![release](https://img.shields.io/github/v/release/electronicarts/kara)](https://github.com/electronicarts/kara/releases)
+
 ### Generate [Finagle](https://twitter.github.io/finagle/) HTTP/JSON services and [Swagger UI](https://swagger.io/tools/swagger-ui/) from [Thrift](https://thrift.apache.org/) service definitions.
 
 ------
