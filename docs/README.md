@@ -1,5 +1,7 @@
 # kara
 
+[![build](https://img.shields.io/github/workflow/status/electronicarts/kara/Scala%20CI)](https://github.com/electronicarts/kara/actions)
+[![coverage](https://img.shields.io/codecov/c/github/electronicarts/kara)](https://codecov.io/gh/electronicarts/kara)
 ![status](https://img.shields.io/badge/status-active-brightgreen.svg)
 [![maven central](https://maven-badges.herokuapp.com/maven-central/com.ea.kara/kara/badge.svg)](https://search.maven.org/artifact/com.ea.kara/kara)
 [![release](https://img.shields.io/github/v/release/electronicarts/kara)](https://github.com/electronicarts/kara/releases)
