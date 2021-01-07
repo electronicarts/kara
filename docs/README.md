@@ -22,7 +22,7 @@ And since a HTTP/JSON API is exposed, you don't necessarily have to deal with th
 ## Usage
 - Add **kara** as a plugin to the sbt project adding a line containing `addSbtPlugin("com.ea.kara" % "kara" % "@VERSION@")` in `project/plugins.sbt`.
 - In your project settings in `build.sbt`:
-    - configure `karaServices = Seq("fully_qualified_service_1", "fully_qualified_service_2, ...)` to indicate the Thrift services Kara should generate Finagle services and Swagger UI for. Services should be listed in `<JAVA_NAMESPACE>.<SERVICE_NAME>` format.
+    - configure `karaServices := Seq("fully_qualified_service_1", "fully_qualified_service_2, ...)` to indicate the Thrift services Kara should generate Finagle services and Swagger UI for. Services should be listed in `<JAVA_NAMESPACE>.<SERVICE_NAME>` format.
     - enable the the plugin with `.enablePlugins(Kara)` on the project that lists the Thrift sources and on which `ScroogeSBT` is enabled.
 
 On compilation (`sbt compile`), a Finagle HTTP service named `Http<SERVICE_NAME>` is generated, which takes as input an instance of a [Scrooge](http://twitter.github.io/scrooge/)-generated Thrift service `<SERVICE_NAME>.MethodPerEndpoint`. All is left to do is to instantiate it in your app and bind it to a Finagle server on a port of your choice.
@@ -62,8 +62,12 @@ Http.server.serve(":8080", karaSvc)
 
 [Scripted tests](./src/sbt-test/kara/) are a great way to see **kara** in action.
 
-## Swagger UI
-`kara` v.`@VERSION@` employs Swagger UI v.`3.31.1`.
+## Dependency Map
+
+| **kara** | **Swagger UI** | **Finagle / Scrooge** |
+|:--------:|:--------------:|:---------------------:|
+| 0.2.0    | 3.38.0         | 20.10.0               |
+| 0.1.0    | 3.31.1         | 20.5.0                |
 
 ## Testing
 **kara** features two modes of testing:

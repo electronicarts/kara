@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
  */
 
 def buildSuffix: String = {
@@ -7,4 +7,4 @@ def buildSuffix: String = {
   if (isSnapshot) "-SNAPSHOT" else ""
 }
 
-version in ThisBuild := "0.1.0" + buildSuffix
+version in ThisBuild := "0.2.0" + buildSuffix

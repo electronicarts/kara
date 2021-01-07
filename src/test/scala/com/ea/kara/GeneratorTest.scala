@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
  */
 
 package com.ea.kara
@@ -65,7 +65,8 @@ class GeneratorTest extends AnyWordSpec with Matchers with EitherValues with Bef
 
       val svc = tmpSourceFolder / "com/ea/kara/generated/test/HttpExampleService.scala"
       svc.exists() shouldBe true
-      svc.contentAsString.trim() shouldBe Source.fromResource("expected/ExampleService.expected").mkString.trim()
+      svc.contentAsString
+        .trim() shouldBe Source.fromResource("expected/ExampleService.expected").mkString.trim()
     }
 
     /*

@@ -88,11 +88,15 @@ object Kara extends AutoPlugin {
         }
         generator.generateSources()
         val sources = listSources()
-        logger.success(s"Generated Kara sources: ${sources.map(_.name).mkString(", ")}")
+        logger.success(
+          s"Generated Kara sources: " +
+          sources.map(_.getPath()).mkString(", ")
+        )
         sources
       } else {
         logger.info(
-          s"Kara sources won't be generated, already existing and up to date: ${oldSources.map(_.name)}"
+          s"Kara sources won't be generated, already existing and up to date: " +
+          oldSources.map(_.getPath()).mkString(", ")
         )
         oldSources
       }
@@ -118,11 +122,15 @@ object Kara extends AutoPlugin {
         }
         generator.generateResources()
         val resources = listResources()
-        logger.success(s"Generated Kara resources: ${resources.map(_.name).mkString(", ")}")
+        logger.success(
+          s"Generated Kara resources: " +
+          resources.map(_.getPath()).mkString(", ")
+        )
         resources
       } else {
         logger.info(
-          s"Kara resources won't be generated, already existing and up to date: ${oldResources.map(_.name)}"
+          s"Kara resources won't be generated, already existing and up to date: " +
+          oldResources.map(_.getPath()).mkString(", ")
         )
         oldResources
       }

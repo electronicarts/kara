@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
  */
 
 libraryDependencies += "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value

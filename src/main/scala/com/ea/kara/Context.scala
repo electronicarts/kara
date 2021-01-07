@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
  */
 
 package com.ea.kara
@@ -49,8 +49,10 @@ case class CodegenContext(
     val servicePackageAndName: Map[String, Seq[String]] = serviceNames
       .map { serviceName =>
         serviceName.lastIndexOf(".") match {
-          case -1    => ("", serviceName)
-          case index => serviceName.splitAt(index)
+          case -1 =>
+            throw new RuntimeException("Provided service names should be qualified by packages.")
+          case index =>
+            serviceName.splitAt(index)
         }
       }
       .groupBy(_._1)
@@ -58,20 +60,28 @@ case class CodegenContext(
         case (k, v) => (k, v.map(_._2.tail))
       }
 
-    val servicesByDocument = thriftFiles
-      .flatMap(file =>
-        file.document.services.map(service => (file.document, service)).filter {
-          case (document, service) =>
-            servicePackageAndName
-              .get(document.javaNamespace)
-              .exists { serviceNames =>
-                serviceNames.contains(service.sid.name)
-              }
-        }
-      )
+    val docToSvc = thriftFiles
+      .flatMap(file => file.document.services.map(service => (file.document, service)))
+
+    val pkgToSvc = servicePackageAndName.flatMap {
+      case (pkg, names) => names.map((pkg, _))
+    }
+    val servicesByDocument: Map[Document, Seq[String]] = pkgToSvc
+      .map {
+        case (pkg, name) =>
+          docToSvc
+            .find {
+              case (doc, docSvc) =>
+                doc.javaNamespace == pkg &&
+                  docSvc.sid.name == name
+            }
+            .getOrElse {
+              throw new RuntimeException(s"No service '$name' found in package '$pkg'.")
+            }
+      }
       .groupBy(_._1)
       .map {
-        case (k, v) => (k, v.map(_._2.sid.name))
+        case (k, v) => (k, v.map(_._2.sid.name).toSeq)
       }
 
     servicesByDocument
