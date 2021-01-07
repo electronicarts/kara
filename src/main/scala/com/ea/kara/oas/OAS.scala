@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
  */
 
 package com.ea.kara.oas
@@ -12,6 +12,5 @@ object OAS {
 }
 
 case class OAS(json: Json) {
-  def asJsonString(): String = json.toString
   def asYamlString(): String = json.asYaml.spaces2.toString
 }

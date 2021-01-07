@@ -1,0 +1,4 @@
+# Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
+
+# Make sure the project does not compile
+-> compile

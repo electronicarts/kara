@@ -5,6 +5,7 @@
   "anI16": 16,
   "anI32": 32,
   "anI64": 64,
+  "aDouble": 42.1337,
   "binaryData": "YUJ5dGUK",
   "aListOfPrimitives": [ "stringOne", "stringTwo" ],
   "aListOfStructs": [ { }, { } ],

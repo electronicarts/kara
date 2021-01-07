@@ -1,15 +1,15 @@
 /*
- * Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
  */
 
 import sbt._
 
-val twitterVersion = "19.8.0"
-val circeVersion   = "0.11.1"
+val twitterVersion = "20.10.0"
+val circeVersion   = "0.13.0"
 
 lazy val root = (project in file("."))
   .settings(
-    scalaVersion := "2.12.8",
+    scalaVersion := "2.12.12",
     libraryDependencies ++= Seq(
       "com.twitter" %% "twitter-server" % twitterVersion,
       "com.twitter" %% "scrooge-core"   % twitterVersion,

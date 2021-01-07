@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
  */
 
 namespace java com.local
@@ -31,16 +31,17 @@ struct AStruct {
     4: i16 anI16
     5: i32 anI32
     6: i64 anI64
-    7: binary binaryData
-    8: list<string> aListOfPrimitives
-    9: list<ANestedStruct> aListOfStructs
-    10: map<string, string> aMapOfPrimitives
-    11: map<string, ANestedStruct> aMapOfStructs
-    12: optional string anOptionalOfPrimitive
-    13: optional AnEnum anOptionalOfEnum
-    14: AnUion anUnion
-    15: test_import.ImportedStruct importedStruct
-    16: string object # reserved Scala keyword
+    7: double aDouble
+    8: binary binaryData
+    9: list<string> aListOfPrimitives
+    10: list<ANestedStruct> aListOfStructs
+    11: map<string, string> aMapOfPrimitives
+    12: map<string, ANestedStruct> aMapOfStructs
+    13: optional string anOptionalOfPrimitive
+    14: optional AnEnum anOptionalOfEnum
+    15: AnUion anUnion
+    16: test_import.ImportedStruct importedStruct
+    17: string object # reserved Scala keyword
 }
 
 struct EmptyStruct {

@@ -1,10 +1,10 @@
 /*
- * Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
  */
 
 import sbt._
 
-val finagleVersion = "20.5.0"
+val finagleVersion = "20.10.0"
 
 credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
@@ -39,10 +39,10 @@ lazy val root = (project in file("."))
     publishSettings,
     addSbtPlugin("com.twitter" % "scrooge-sbt-plugin" % finagleVersion),
     libraryDependencies ++= Seq(
-      "commons-io"            % "commons-io"     % "2.7",
+      "commons-io"            % "commons-io"     % "2.8.0",
       "org.scalatra.scalate" %% "scalate-core"   % "1.9.6",
       "com.twitter"          %% "finagle-http"   % finagleVersion % Test,
-      "io.circe"             %% "circe-yaml"     % "0.13.0",
+      "io.circe"             %% "circe-yaml"     % "0.13.1",
       "com.github.pathikrit" %% "better-files"   % "3.9.1",
       "io.swagger.parser.v3"  % "swagger-parser" % "2.0.21"       % Test,
       "org.scalatest"        %% "scalatest"      % "3.2.1"        % Test
