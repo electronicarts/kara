@@ -24,6 +24,9 @@ tags
 .metals/
 .vscode
 
+# BSP
+.bsp/
+
 # macOS
 .DS_Store
 

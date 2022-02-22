@@ -20,24 +20,21 @@ And since a HTTP/JSON API is exposed, you don't necessarily have to deal with th
 **NOTE**: while extremely useful during development, **kara** is not intended for production use.
 
 ## Usage
-
-- Add **kara** as a plugin to the sbt project adding a line containing `addSbtPlugin("com.ea.kara" % "kara" % "0.2.0")` in `project/plugins.sbt`.
+- Add **kara** as a plugin to the sbt project adding a line containing `addSbtPlugin("com.ea.kara" % "kara" % "0.2.1")` in `project/plugins.sbt`.
 - In your project settings in `build.sbt`:
-  - configure `karaServices := Seq("fully_qualified_service_1", "fully_qualified_service_2, ...)` to indicate the Thrift services Kara should generate Finagle services and Swagger UI for. Services should be listed in `<JAVA_NAMESPACE>.<SERVICE_NAME>` format.
-  - enable the the plugin with `.enablePlugins(Kara)` on the project that lists the Thrift sources and on which `ScroogeSBT` is enabled.
+    - configure `karaServices := Seq("fully_qualified_service_1", "fully_qualified_service_2, ...)` to indicate the Thrift services Kara should generate Finagle services and Swagger UI for. Services should be listed in `<JAVA_NAMESPACE>.<SERVICE_NAME>` format.
+    - enable the the plugin with `.enablePlugins(Kara)` on the project that lists the Thrift sources and on which `ScroogeSBT` is enabled.
 
 On compilation (`sbt compile`), a Finagle HTTP service named `Http<SERVICE_NAME>` is generated, which takes as input an instance of a [Scrooge](http://twitter.github.io/scrooge/)-generated Thrift service `<SERVICE_NAME>.MethodPerEndpoint`. All is left to do is to instantiate it in your app and bind it to a Finagle server on a port of your choice.
-
+    
 ## Example
 
 #### project/plugins.sbt
-
 ```scala
-addSbtPlugin("com.ea.kara" % "kara" % "0.2.0")
+addSbtPlugin("com.ea.kara" % "kara" % "0.2.1")
 ```
 
 #### build.sbt
-
 ```scala
 // ...
 
@@ -51,7 +48,6 @@ lazy val thrift = project.in(file("thrift"))
 ```
 
 #### App.scala
-
 ```scala
 import com.twitter.finagle.Http
 
@@ -70,16 +66,15 @@ Http.server.serve(":8080", karaSvc)
 
 | **kara** | **Swagger UI** | **Finagle / Scrooge** |
 |:--------:|:--------------:|:---------------------:|
-|  0.2.0   |     3.38.0     |        20.10.0        |
-|  0.1.0   |     3.31.1     |        20.5.0         |
+|  0.2.x   | 3.38.0         | 20.10.0               |
+|  0.1.0   | 3.31.1         | 20.5.0                |
 
 ## Testing
-
 **kara** features two modes of testing:
 - *Unit tests*, testing code generation logic:
-  - `sbt test`
+    - `sbt test`
 - *E2E tests*, testing plugin functionality via [scripted](https://www.scala-sbt.org/1.x/docs/Testing-sbt-plugins.html) test framework:
-  - `sbt scripted`
+    - `sbt scripted`
 
 ## Developer
 

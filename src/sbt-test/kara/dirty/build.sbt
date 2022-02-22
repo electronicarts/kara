@@ -1,15 +1,15 @@
 /*
- * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2022 Electronic Arts Inc.  All rights reserved.
  */
 
 import sbt._
 
 val twitterVersion = "20.10.0"
-val circeVersion   = "0.13.0"
+val circeVersion   = "0.14.1"
 
 lazy val root = (project in file("."))
   .settings(
-    scalaVersion := "2.12.12",
+    scalaVersion := "2.12.15",
     libraryDependencies ++= Seq(
       "com.twitter" %% "twitter-server" % twitterVersion,
       "com.twitter" %% "scrooge-core"   % twitterVersion,
@@ -21,7 +21,7 @@ lazy val root = (project in file("."))
     ),
     TaskKey[Unit]("check") := {
       // Check sources are regenerated
-      val newSource = ((sourceManaged in Compile).value ** "package.scala").get.headOption
+      val newSource = ((Compile / sourceManaged).value ** "package.scala").get.headOption
         .getOrElse(sys.error("Cannot find generated stub service"))
 
       val sourceContent = IO.read(newSource)
@@ -29,7 +29,7 @@ lazy val root = (project in file("."))
         sys.error("Source files were not re-generated as expected")
 
       // Check resources are regenerated
-      val newResource = ((resourceManaged in Compile).value ** "service.oas").get.headOption
+      val newResource = ((Compile / resourceManaged).value ** "service.oas").get.headOption
         .getOrElse(sys.error("Cannot find generated stub service"))
 
       val resourceContent = IO.read(newResource)

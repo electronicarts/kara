@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2022 Electronic Arts Inc.  All rights reserved.
  */
 
 package com.ea.kara
@@ -50,7 +50,9 @@ case class CodegenContext(
       .map { serviceName =>
         serviceName.lastIndexOf(".") match {
           case -1 =>
-            throw new RuntimeException("Provided service names should be qualified by packages.")
+            throw new RuntimeException(
+              s"Provided service names should be qualified by packages, but found $serviceName."
+            )
           case index =>
             serviceName.splitAt(index)
         }
@@ -76,7 +78,14 @@ case class CodegenContext(
                   docSvc.sid.name == name
             }
             .getOrElse {
-              throw new RuntimeException(s"No service '$name' found in package '$pkg'.")
+              throw new RuntimeException(
+                s"No service '$name' found in package '$pkg'." +
+                "Valid alternatives are: " + 
+                docToSvc
+                  .filter { case (doc, _) => doc.javaNamespace == pkg }
+                  .map { case (_, svc) =>  svc.sid.name }
+                  .mkString(", ")
+              )
             }
       }
       .groupBy(_._1)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2022 Electronic Arts Inc.  All rights reserved.
  */
 
 package com.ea.kara.bindings
