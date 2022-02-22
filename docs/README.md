@@ -66,8 +66,8 @@ Http.server.serve(":8080", karaSvc)
 
 | **kara** | **Swagger UI** | **Finagle / Scrooge** |
 |:--------:|:--------------:|:---------------------:|
-| 0.2.0    | 3.38.0         | 20.10.0               |
-| 0.1.0    | 3.31.1         | 20.5.0                |
+|  0.2.x   | 3.38.0         | 20.10.0               |
+|  0.1.0   | 3.31.1         | 20.5.0                |
 
 ## Testing
 **kara** features two modes of testing:

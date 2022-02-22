@@ -1,16 +1,21 @@
 /*
- * Copyright (C) 2021 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2022 Electronic Arts Inc.  All rights reserved.
  */
 
 import sbt._
 
 val finagleVersion = "20.10.0"
+val circeVersion   = "0.14.1"
 
-credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+ThisBuild / credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+ThisBuild / envVars ++= Map("CI_PROJECT_DIR" -> sys.env.getOrElse("CI_PROJECT_DIR", "."))
+ThisBuild / scalaVersion := "2.12.15"
+ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-parser-combinators" % "always"
 
-envVars ++= Map("CI_PROJECT_DIR" -> sys.env.getOrElse("CI_PROJECT_DIR", "."))
-
-lazy val sbtOps = sys.env.get("SBT_OPTS").map(_.split(" ")).getOrElse(Array.empty)
+lazy val sbtOps = sys.env
+  .get("SBT_OPTS")
+  .map(_.split(" "))
+  .getOrElse(Array.empty)
 
 lazy val publishSettings = Seq(
   homepage := Some(url("https://github.com/electronicarts/kara")),
@@ -40,12 +45,12 @@ lazy val root = (project in file("."))
     addSbtPlugin("com.twitter" % "scrooge-sbt-plugin" % finagleVersion),
     libraryDependencies ++= Seq(
       "commons-io"            % "commons-io"     % "2.8.0",
-      "org.scalatra.scalate" %% "scalate-core"   % "1.9.6",
+      "org.scalatra.scalate" %% "scalate-core"   % "1.9.7",
       "com.twitter"          %% "finagle-http"   % finagleVersion % Test,
-      "io.circe"             %% "circe-yaml"     % "0.13.1",
+      "io.circe"             %% "circe-yaml"     % circeVersion,
       "com.github.pathikrit" %% "better-files"   % "3.9.1",
       "io.swagger.parser.v3"  % "swagger-parser" % "2.0.21"       % Test,
-      "org.scalatest"        %% "scalatest"      % "3.2.1"        % Test
+      "org.scalatest"        %% "scalatest"      % "3.2.1"        % Test,
     ),
     scriptedLaunchOpts ++= Seq(
       "-Xmx1024M",
@@ -53,18 +58,19 @@ lazy val root = (project in file("."))
     ) ++ sbtOps,
     scriptedBufferLog := false,
     name := "kara",
-    sbtPlugin := true,
-    scalaVersion := "2.12.12"
+    sbtPlugin := true
   )
 
 lazy val docs = project
   .in(file("mdoc"))
   .settings(
-    skip in publish := true,
+    publish / skip := true,
     mdocOut := file("."),
     mdocVariables := Map(
-      // TODO: If this runs in the pipeline we can simply use `version.value`?
       "VERSION" -> version.value.stripSuffix("-SNAPSHOT")
     )
   )
   .enablePlugins(MdocPlugin)
+
+addCommandAlias("codecov", "; clean; reload; coverage; test; coverageReport; coverageAggregate; coverageOff")
+addCommandAlias("fmt", "; scalafmtAll")

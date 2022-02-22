@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Electronic Arts Inc.  All rights reserved.
+ * Copyright (C) 2022 Electronic Arts Inc.  All rights reserved.
  */
 
 package com.ea.kara
@@ -47,10 +47,10 @@ object Kara extends AutoPlugin {
   import autoImport._
   import ScroogeSBT.autoImport._
 
-  val circeVersion: String = "0.13.0"
+  val circeVersion: String = "0.14.1"
 
   override lazy val globalSettings: Seq[Setting[_]] = Seq(
-    (karaHeaders in Compile) := Seq.empty
+    Compile / karaHeaders := Seq.empty
   )
 
   override lazy val projectSettings: Seq[Setting[_]] = Seq(
@@ -63,14 +63,14 @@ object Kara extends AutoPlugin {
           .map(_ % circeVersion),
     karaLogger := streams.value.log,
     karaGenerator := new Generator(
-      (scroogeThriftIncludes in Compile).value,
-      (scroogeThriftSources in Compile).value,
-      (karaServices in Compile).value,
-      (karaHeaders in Compile).value,
-      (sourceManaged in Compile).value,
-      (resourceManaged in Compile).value
-    )((karaLogger in Compile).value),
-    karaCodeGen in Compile := {
+      (Compile / scroogeThriftIncludes).value,
+      (Compile / scroogeThriftSources).value,
+      (Compile / karaServices).value,
+      (Compile / karaHeaders).value,
+      (Compile / sourceManaged).value,
+      (Compile / resourceManaged).value
+    )((Compile / karaLogger).value),
+    Compile / karaCodeGen := {
       val logger    = karaLogger.value
       val generator = karaGenerator.value
 
@@ -78,7 +78,7 @@ object Kara extends AutoPlugin {
 
       val oldSources = listSources()
 
-      if ((scroogeIsDirty in Compile).value) {
+      if ((Compile / scroogeIsDirty).value) {
         if (oldSources.nonEmpty) {
           val karaDir = (generator.sourcePath ** "kara").filter(_.isDirectory).get.headOption
           logger.info(
@@ -90,19 +90,21 @@ object Kara extends AutoPlugin {
         val sources = listSources()
         logger.success(
           s"Generated Kara sources: " +
-          sources.map(_.getPath()).mkString(", ")
+            sources.map(_.getPath()).mkString(", ")
         )
         sources
       } else {
         logger.info(
           s"Kara sources won't be generated, already existing and up to date: " +
-          oldSources.map(_.getPath()).mkString(", ")
+            oldSources.map(_.getPath()).mkString(", ")
         )
         oldSources
       }
     },
-    (karaCodeGen in Compile) := (karaCodeGen in Compile).dependsOn(scroogeGen in Compile).value,
-    karaResourceGen in Compile := {
+    Compile / karaCodeGen := (Compile / karaCodeGen)
+      .dependsOn(Compile / scroogeGen)
+      .value,
+    Compile / karaResourceGen := {
       val logger    = karaLogger.value
       val generator = karaGenerator.value
 
@@ -111,7 +113,7 @@ object Kara extends AutoPlugin {
 
       val oldResources = listResources()
 
-      if ((scroogeIsDirty in Compile).value) {
+      if ((Compile / scroogeIsDirty).value) {
         if (oldResources.nonEmpty) {
           val swaggerDir =
             (generator.resourcePath ** "swagger").filter(_.isDirectory).get.headOption
@@ -124,21 +126,21 @@ object Kara extends AutoPlugin {
         val resources = listResources()
         logger.success(
           s"Generated Kara resources: " +
-          resources.map(_.getPath()).mkString(", ")
+            resources.map(_.getPath()).mkString(", ")
         )
         resources
       } else {
         logger.info(
           s"Kara resources won't be generated, already existing and up to date: " +
-          oldResources.map(_.getPath()).mkString(", ")
+            oldResources.map(_.getPath()).mkString(", ")
         )
         oldResources
       }
     },
-    (karaResourceGen in Compile) := (karaResourceGen in Compile)
-      .dependsOn(scroogeGen in Compile)
+    Compile / karaResourceGen := (Compile / karaResourceGen)
+      .dependsOn(Compile / scroogeGen)
       .value,
-    sourceGenerators in Compile += (karaCodeGen in Compile).taskValue,
-    resourceGenerators in Compile += (karaResourceGen in Compile).taskValue
+    Compile / sourceGenerators += (Compile / karaCodeGen).taskValue,
+    Compile / resourceGenerators += (Compile / karaResourceGen).taskValue
   )
 }
