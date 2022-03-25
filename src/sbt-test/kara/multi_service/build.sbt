@@ -18,8 +18,10 @@ lazy val root = (project in file("."))
       "io.circe"    %% "circe-parser"   % circeVersion
     ),
     karaServices := Seq(
-      "com.local.ServiceTwo",
       "com.local.ServiceOne",
+      "com.local.ServiceTwo",
+      "com.local.ServiceThree",
+      "com.local.ServiceFour",
     )
   )
   .enablePlugins(Kara)

@@ -13,13 +13,16 @@ import io.circe._
 import io.circe.generic.auto._
 import com.ea.kara.generated.svc_one._
 import com.ea.kara.generated.svc_two._
+import com.ea.kara.generated.svcs_three_four._
 
 object MultiServiceTest extends App {
 
   case class GenericError(message: String)
 
-  lazy val svcOne: Service[http.Request, http.Response] = new HttpServiceOne(new ServiceOne)
-  lazy val svcTwo: Service[http.Request, http.Response] = new HttpServiceTwo(new ServiceTwo)
+  lazy val svcOne: Service[http.Request, http.Response]   = new HttpServiceOne(new ServiceOne)
+  lazy val svcTwo: Service[http.Request, http.Response]   = new HttpServiceTwo(new ServiceTwo)
+  lazy val svcThree: Service[http.Request, http.Response] = new HttpServiceThree(new ServiceThree)
+  lazy val svcFour: Service[http.Request, http.Response]  = new HttpServiceFour(new ServiceFour)
 
   override def main(args: Array[String]): Unit = {
     assert(args.length == 1, "Should pass the name of the test to run.")
@@ -29,8 +32,10 @@ object MultiServiceTest extends App {
     val request = finagleRequest("ping")
 
     testName match {
-      case "pingServiceOne" => serve(svcOne, request)
-      case "pingServiceTwo" => serve(svcTwo, request)
+      case "pingServiceOne"   => serve(svcOne, request)
+      case "pingServiceTwo"   => serve(svcTwo, request)
+      case "pingServiceThree" => serve(svcThree, request)
+      case "pingServiceFour"  => serve(svcFour, request)
     }
   }
 
@@ -76,5 +81,13 @@ class ServiceOne extends ServiceOne.MethodPerEndpoint {
 }
 
 class ServiceTwo extends ServiceTwo.MethodPerEndpoint {
+  override def ping(): Future[Unit] = Future.Unit
+}
+
+class ServiceThree extends ServiceThree.MethodPerEndpoint {
+  override def ping(): Future[Unit] = Future.Unit
+}
+
+class ServiceFour extends ServiceFour.MethodPerEndpoint {
   override def ping(): Future[Unit] = Future.Unit
 }

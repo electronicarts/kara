@@ -3,4 +3,6 @@
 # Make sure both services can be hit
 > run pingServiceOne
 > run pingServiceTwo
+> run pingServiceThree
+> run pingServiceFour
 

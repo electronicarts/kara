@@ -66,30 +66,28 @@ case class CodegenContext(
       .flatMap(file => file.document.services.map(service => (file.document, service)))
 
     val servicesByDocument: Map[Document, Seq[String]] = servicePackageAndName
-      .flatMap {
-        case (pkg, names) => names.map { name =>
-          docToSvc
-            .find {
-              case (doc, docSvc) =>
-                doc.javaNamespace == pkg &&
-                  docSvc.sid.name == name
-            }
-            .getOrElse {
-              throw new RuntimeException(
-                s"No service '$name' found in package '$pkg'." +
-                  "Valid alternatives are: " +
-                  docToSvc
-                    .filter { case (doc, _) => doc.javaNamespace == pkg }
-                    .map { case (_, svc) =>  svc.sid.name }
-                    .mkString(", ")
-              )
-            }
-        }
+      .toList
+      .flatMap { case (pkg, svcNames) => svcNames.map((pkg, _)) }
+      .map { case (pkg, svcName) =>
+        docToSvc
+          .find {
+            case (doc, docSvc) =>
+              doc.javaNamespace == pkg &&
+              docSvc.sid.name == svcName
+          }
+          .getOrElse {
+            throw new RuntimeException(
+              s"No service '$svcName' found in package '$pkg'." +
+              "Valid alternatives are: " +
+              docToSvc
+                .filter { case (doc, _) => doc.javaNamespace == pkg }
+                .map { case (_, svc) =>  svc.sid.name }
+                .mkString(", ")
+            )
+          }
       }
       .groupBy(_._1)
-      .map {
-        case (k, v) => (k, v.map(_._2.sid.name).toSeq)
-      }
+      .map { case (k, v) => (k, v.map(_._2.sid.name)) }
 
     servicesByDocument
   }
