@@ -5,8 +5,8 @@
 package com.ea.kara
 
 import com.twitter.scrooge.ScroogeSBT
-import sbt._
-import sbt.Keys._
+import sbt.*
+import sbt.Keys.*
 
 object Kara extends AutoPlugin {
 
@@ -44,16 +44,16 @@ object Kara extends AutoPlugin {
     )
   }
 
-  import autoImport._
-  import ScroogeSBT.autoImport._
+  import autoImport.*
+  import ScroogeSBT.autoImport.*
 
   val circeVersion: String = "0.14.1"
 
-  override lazy val globalSettings: Seq[Setting[_]] = Seq(
+  override lazy val globalSettings: Seq[Setting[?]] = Seq(
     Compile / karaHeaders := Seq.empty
   )
 
-  override lazy val projectSettings: Seq[Setting[_]] = Seq(
+  override lazy val projectSettings: Seq[Setting[?]] = Seq(
     libraryDependencies ++=
       Seq("finagle-http", "scrooge-serializer", "finagle-thrift")
         .map("com.twitter" %% _)
@@ -82,7 +82,7 @@ object Kara extends AutoPlugin {
         if (oldSources.nonEmpty) {
           val karaDir = (generator.sourcePath ** "kara").filter(_.isDirectory).get.headOption
           logger.info(
-            s"Generated Kara sources in $karaDir are out of date, deleting them and re-generating"
+            s"Generated Kara sources in $karaDir are out of date, deleting them and re-generating..."
           )
           karaDir.foreach(IO.delete)
         }

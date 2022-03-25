@@ -65,12 +65,9 @@ case class CodegenContext(
     val docToSvc = thriftFiles
       .flatMap(file => file.document.services.map(service => (file.document, service)))
 
-    val pkgToSvc = servicePackageAndName.flatMap {
-      case (pkg, names) => names.map((pkg, _))
-    }
-    val servicesByDocument: Map[Document, Seq[String]] = pkgToSvc
-      .map {
-        case (pkg, name) =>
+    val servicesByDocument: Map[Document, Seq[String]] = servicePackageAndName
+      .flatMap {
+        case (pkg, names) => names.map { name =>
           docToSvc
             .find {
               case (doc, docSvc) =>
@@ -80,13 +77,14 @@ case class CodegenContext(
             .getOrElse {
               throw new RuntimeException(
                 s"No service '$name' found in package '$pkg'." +
-                "Valid alternatives are: " + 
-                docToSvc
-                  .filter { case (doc, _) => doc.javaNamespace == pkg }
-                  .map { case (_, svc) =>  svc.sid.name }
-                  .mkString(", ")
+                  "Valid alternatives are: " +
+                  docToSvc
+                    .filter { case (doc, _) => doc.javaNamespace == pkg }
+                    .map { case (_, svc) =>  svc.sid.name }
+                    .mkString(", ")
               )
             }
+        }
       }
       .groupBy(_._1)
       .map {

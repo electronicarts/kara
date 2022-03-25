@@ -81,7 +81,7 @@ class Generator(
         thriftFile.document.services.filter(service => serviceNames.contains(service.sid.name))
 
       logger.debug(
-        s"Generating services [${services.map(_.sid.name)}] for Thrift file ${thriftFile.name}..."
+        s"Generating services [${services.map(_.sid.name).mkString(", ")}] for Thrift file ${thriftFile.name}..."
       )
 
       services.foreach { service =>

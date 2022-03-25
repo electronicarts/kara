@@ -10,8 +10,8 @@ val circeVersion   = "0.14.1"
 ThisBuild / credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 ThisBuild / envVars ++= Map("CI_PROJECT_DIR" -> sys.env.getOrElse("CI_PROJECT_DIR", "."))
 ThisBuild / scalaVersion := "2.12.15"
-ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-parser-combinators" % "always"
-ThisBuild / versionScheme := Some("early-semver")
+ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-parser-combinators" % VersionScheme.Always
+ThisBuild / versionScheme := Some(VersionScheme.EarlySemVer)
 
 lazy val sbtOps = sys.env
   .get("SBT_OPTS")
