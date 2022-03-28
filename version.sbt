@@ -7,4 +7,4 @@ def buildSuffix: String = {
   if (isSnapshot) "-SNAPSHOT" else ""
 }
 
-ThisBuild / version := "0.2.1" + buildSuffix
+ThisBuild / version := "0.2.2" + buildSuffix

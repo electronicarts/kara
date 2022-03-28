@@ -1,0 +1,8 @@
+# Copyright (C) 2022 Electronic Arts Inc.  All rights reserved.
+
+# Make sure both services can be hit
+> run pingServiceOne
+> run pingServiceTwo
+> run pingServiceThree
+> run pingServiceFour
+

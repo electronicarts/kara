@@ -1,6 +1,6 @@
 # Copyright (C) 2022 Electronic Arts Inc.  All rights reserved.
 
-# Make sure the generated sources compile
+# Make sure all request/response patterns are supported
 > run mirror
 > run oneArgUnwrapped
 > run knownException
